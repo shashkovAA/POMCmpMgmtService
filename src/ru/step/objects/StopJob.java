@@ -9,6 +9,8 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
+import org.w3c.dom.NodeList;
+
 public class StopJob extends POMWebServiceOperation{
 	private final String actionServiceName = "StopJob";;
 	private SOAPMessage response;
@@ -64,10 +66,24 @@ public class StopJob extends POMWebServiceOperation{
     </soapenv:Body>
 	</soapenv:Envelope>
 		*/
+		
+	/* Example of Response	
+	 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+		   <soapenv:Body>
+		      <ns1:StopJobResponse xmlns:ns1="http://services.pim.avaya.com/CmpMgmt/">
+		         <ns1:IsStopped>true</ns1:IsStopped>
+		      </ns1:StopJobResponse>
+		   </soapenv:Body>
+		</soapenv:Envelope>	*/
     }	
 	
 	public String getResponseString() {
 		return convertSOAPMessageToString(response); 
 	}
+	public String getResponseResult() {	
+		return getSOAPResponseTagText(response, "IsStopped"); 
+	}
+
+	
 
 }

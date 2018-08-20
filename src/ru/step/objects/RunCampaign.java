@@ -9,6 +9,8 @@ import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.soap.SOAPPart;
 
+import org.w3c.dom.NodeList;
+
 public class RunCampaign extends POMWebServiceOperation{
 	private final String actionServiceName = "RunCampaign";;
 	private SOAPMessage response;
@@ -69,4 +71,10 @@ public class RunCampaign extends POMWebServiceOperation{
 	public String getResponseString() {
 		return convertSOAPMessageToString(response); 
 	}
+
+	public String getResponseResult() {	
+		return getSOAPResponseTagText(response, "IsQueued"); 
+	}
+
+	
 }

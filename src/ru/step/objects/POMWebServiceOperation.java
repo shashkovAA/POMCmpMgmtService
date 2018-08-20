@@ -5,8 +5,10 @@ import java.io.StringWriter;
 
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.MimeHeaders;
+import javax.xml.soap.SOAPBody;
 import javax.xml.soap.SOAPConnection;
 import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPMessage;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -15,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.logging.log4j.Logger;
+import org.w3c.dom.NodeList;
 
 public abstract class POMWebServiceOperation {
 	
@@ -109,6 +112,35 @@ public abstract class POMWebServiceOperation {
         	getLogger().debug(printErrorStackTrace(except));
         }
         return stringResult.toString().replace('"', '|');
+	}
+	
+	public String getSOAPResponseTagText(SOAPMessage response, String tag) {
+		SOAPBody body = null;
+		
+    	try {
+			body = response.getSOAPBody();
+		} catch (SOAPException except) {
+			getLogger().error(except.getMessage());
+		}
+    	NodeList list = null;
+    	String tagTextResponse = "-1";
+    	String soapResponseString = convertSOAPMessageToString(response);
+    	
+    	String partResponse = soapResponseString.substring(0,soapResponseString.indexOf(namespaceURI));
+    	String responseNamespace = partResponse.substring(partResponse.lastIndexOf(':') + 1, partResponse.lastIndexOf('='));
+    	
+    	//Find namespace from Response. Example: It is [ns1] from  xmlns:ns1="http://services.pim.avaya.com/CmpMgmt/"
+    	list = body.getElementsByTagName(responseNamespace + ":" + tag);
+    	
+    	if (list.getLength()!=0)
+    		try {
+    			tagTextResponse = list.item(0).getTextContent();
+    		} catch (Exception except){
+    			getLogger().error(except.getMessage());
+    			getLogger().debug(printErrorStackTrace(except));
+    		}
+    	
+    	return tagTextResponse;
 	}
 	
 	public String printErrorStackTrace(Exception except) {

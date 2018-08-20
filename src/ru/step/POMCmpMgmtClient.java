@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import ru.step.objects.GetCampaignJobs;
 import ru.step.objects.MyLogger;
 import ru.step.objects.RunCampaign;
-import ru.step.objects.StopActiveJob;
+import ru.step.objects.StopCampaign;
 import ru.step.objects.StopJob;
 
 
@@ -32,19 +32,23 @@ public class POMCmpMgmtClient {
 		switch (actionServiceName) {
 		case "GetCampaignJobs": 
 								GetCampaignJobs getCampaignJobs = new GetCampaignJobs(params);
-								webServiceResponse = getCampaignJobs.getResponseString();
+								//webServiceResponse = getCampaignJobs.getResponseString();
+								webServiceResponse = getCampaignJobs.getResponseResult();
 								break;
 		case "RunCampaign": 
 								RunCampaign runCampaign = new RunCampaign(params);
-								webServiceResponse = runCampaign.getResponseString();
+								//webServiceResponse = runCampaign.getResponseString();
+								webServiceResponse = runCampaign.getResponseResult();
 								break;
 		case "StopJob": 	
 								StopJob stopJob = new StopJob(params);
-								webServiceResponse = stopJob.getResponseString();
+								//webServiceResponse = stopJob.getResponseString();
+								webServiceResponse = stopJob.getResponseResult();
 								break;
-		case "StopActiveJob": 	
-								StopActiveJob stopActiveJob = new StopActiveJob(params);
-								webServiceResponse = stopActiveJob.getResponseString();
+		case "StopCampaign": 	
+								StopCampaign stopCampaign = new StopCampaign(params);
+								//webServiceResponse = stopCampaign.getResponseString();
+								webServiceResponse = stopCampaign.getResponseResult();								
 								break;
 		}
 		System.out.println(webServiceResponse);

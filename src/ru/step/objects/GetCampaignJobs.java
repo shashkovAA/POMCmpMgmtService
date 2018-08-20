@@ -94,4 +94,8 @@ import javax.xml.soap.SOAPPart;
 	public String getResponseString() {
 		return convertSOAPMessageToString(response); 
 	}
+
+	public String getResponseResult() {
+		return getSOAPResponseTagText(response, "JobID");
+	}
 }
