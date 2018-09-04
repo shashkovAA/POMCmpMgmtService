@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.Logger;
 
 import ru.step.objects.GetCampaignJobs;
+import ru.step.objects.GetContactListNames;
 import ru.step.objects.MyLogger;
 import ru.step.objects.RunCampaign;
 import ru.step.objects.StopCampaign;
@@ -49,6 +50,15 @@ public class POMCmpMgmtClient {
 								StopCampaign stopCampaign = new StopCampaign(params);
 								//webServiceResponse = stopCampaign.getResponseString();
 								webServiceResponse = stopCampaign.getResponseResult();								
+								break;
+		
+		case "GetContactListNames" :
+								GetContactListNames getContactListNames = new GetContactListNames(params);
+								//webServiceResponse = stopCampaign.getResponseString();
+								webServiceResponse = getContactListNames.getResponseResult();								
+								break;	
+								
+		default : 				getLogger().error("Unknown POMCmpMgmtService operation [" + actionServiceName + "]");
 								break;
 		}
 		System.out.println(webServiceResponse);
