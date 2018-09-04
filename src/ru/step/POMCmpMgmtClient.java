@@ -12,6 +12,7 @@ import java.util.Properties;
 import org.apache.logging.log4j.Logger;
 
 import ru.step.objects.GetCampaignJobs;
+import ru.step.objects.GetContactListNames;
 import ru.step.objects.MyLogger;
 import ru.step.objects.RunCampaign;
 import ru.step.objects.StopActiveJob;
@@ -45,6 +46,13 @@ public class POMCmpMgmtClient {
 		case "StopActiveJob": 	
 								StopActiveJob stopActiveJob = new StopActiveJob(params);
 								webServiceResponse = stopActiveJob.getResponseString();
+								break;
+		case "GetContactListNames": 	
+								GetContactListNames getContactListNames = new GetContactListNames(params);
+								webServiceResponse = getContactListNames.getResponseString();
+								break;						
+		default :				
+								getLogger().error("Unknown ServiceName " + actionServiceName + "is called.");
 								break;
 		}
 		System.out.println(webServiceResponse);
